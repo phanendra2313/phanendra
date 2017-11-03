@@ -1,0 +1,43 @@
+----Autoconf File----
+Configure.ac @
+
+#initialization of qualcomm package
+AC_INIT([qualcomm],[1.0])
+
+# Verifies the --srcdir is correct by checking for the path
+AC_CONFIG_SRCDIR([qualcomm.c])	
+
+#defines some macros variable to be included by source			  
+#Generates config.h from config.h.in by configure
+#config.h.in.  Generated from configure.ac by autoheader
+AC_CONFIG_HEADERS(config.h)
+
+
+AC_CONFIG_FILES(Makefile)
+
+
+AM_INIT_AUTOMAKE([foreign subdir-objects])
+
+# Checks for programs
+AC_PROG_CC
+
+AC_OUTPUT
+
+---- AutoMake File -----
+Makefile.am
+
+bin_PROGRAMS = QUALCOMM
+QUALCOMM_SOURCES = qualcomm.c aricent.c
+
+---- Recipe -----
+phani.bb
+
+inherit autotools
+DESCRIPTION = "Test Recipe"
+LICENSE = " "
+LIC_FILES_CHKSUM = ""
+
+PR = "r0"
+SRC_DIR = <$WORKSPACE>
+S = <$WORKDIR>
+
