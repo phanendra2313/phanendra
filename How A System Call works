@@ -21,3 +21,6 @@ execve()
 open()
 read()
 write() etc 
+
+Ref:
+https://www.ibm.com/developerworks/community/blogs/58e72888-6340-46ac-b488-d31aa4058e9c/entry/linux_system_calls20?lang=en
