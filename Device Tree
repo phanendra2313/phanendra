@@ -1,0 +1,61 @@
+device tree (also written devicetree) is a data structure describing the hardware components of a particular computer 
+so that the operating system's kernel can use and manage those components
+
+Ref: https://elinux.org/Device_Tree_Usage
+
+The device tree is a simple tree structure of nodes and properties. 
+Properties are key-value pairs, and node may contain both properties and child nodes. 
+For example, the following is a simple tree in the .dts format: 
+/ {
+    node1 {
+        a-string-property = "A string";
+        a-string-list-property = "first string", "second string";
+        // hex is implied in byte arrays. no '0x' prefix is required
+        a-byte-data-property = [01 23 34 56];
+        child-node1 {
+            first-child-property;
+            second-child-property = <1>;
+            a-string-property = "Hello, world";
+        };
+        child-node2 {
+        };
+    };
+    node2 {
+        an-empty-property;
+        a-cell-property = <1 2 3 4>; /* each number (cell) is a uint32 */
+        child-node1 {
+        };
+    };
+};
+
+Initial structure
+
+The first step is to lay down a skeleton structure for the machine. This is the bare minimum structure required for a valid device tree. At this stage you want to uniquely identify the machine.
+
+/dts-v1/;
+
+/ {
+    compatible = "acme,coyotes-revenge";
+};
+
+compatible specifies the name of the system. It contains a string in the form "<manufacturer>,<model>. It is important to specify the exact device, and to include the manufacturer name to avoid namespace collisions. Since the operating system will use the compatible value to make decisions about how to run on the machine, it is very important to put correct data into this property.
+
+Theoretically, compatible is all the data an OS needs to uniquely identify a machine. If all the machine details are hard coded, then the OS could look specifically for "acme,coyotes-revenge" in the top level compatible property.
+CPUs
+
+Next step is to describe for each of the CPUs. A container node named "cpus" is added with a child node for each CPU. In this case the system is a dual-core Cortex A9 system from ARM.
+
+/dts-v1/;
+
+/ {
+    compatible = "acme,coyotes-revenge";
+
+    cpus {
+        cpu@0 {
+            compatible = "arm,cortex-a9";
+        };
+        cpu@1 {
+            compatible = "arm,cortex-a9";
+        };
+    };
+};
