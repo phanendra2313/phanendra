@@ -1,0 +1,50 @@
+1)
+Min Reuirements:
+Git 1.8.3.1 or greater     : $git --version
+tar 1.27 or greater          : $ tar --version
+Python 3.4.0 or greater: $ python –version for 
+ 
+ Required packages to install for ubuntu:
+      $ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib \
+     build-essential chrpath socat cpio python python3 python3-pip python3-pexpect \
+     xz-utils debianutils iputils-ping libsdl1.2-dev xterm
+2) 
+download poky source code: 
+$git clone git://git.yoctoproject.org/poky -b sumo
+$cd poky
+
+3) 
+ Initialize the Build Environment: Run the oe-init-build-env environment setup script to define the OpenEmbedded build environment on your build host.
+$ source oe-init-build-env
+
+4)
+By default, the target machine for the build is qemux86, which produces an image that can be used in the QEMU emulator and is targeted at an Intel® 32-bit based architecture. Further on in this example, this default is easily changed through the MACHINE variable in build/conf/local.conf so that you can quickly build an image for a different machines supported from meta/conf/machine/.
+MACHINE="qemuarm64"
+
+5)Layers Creation:
+  I)check for layers existed with priority using below 
+                $bitbake-layers show-layers 
+                
+ II)create a new layer using existed script of yocto-layer
+                $./scripts/yocto-layer create new-layer
+                Note: if we want to create layer with sample bb, please select Yes, so that it will create a simple Hellow world recipe(bb)
+                
+III)Add new layer in build/conf/bblayers.conf
+                BBLAYERS += "${BSPDIR}/sources/meta-new-layer"
+                
+Now we can able to see new layer created with $bitbake-layers show-layers  command. which was now started parsing by poky.
+
+6)Start making build using bitbake <recipe name>
+
+
+Note: You Can able to see all environmental variables & What all files are including while executing a bb can be seen with bitbake -e <recipe name>  
+
+FYI: 
+Quick start Manual from Yocto @ https://www.yoctoproject.org/docs/2.4.2/yocto-project-qs/yocto-project-qs.html 
+NXP Dosument of how to create a new layer @ https://community.nxp.com/docs/DOC-331917
+Bitbake User Manual For Details of MetaData , Syntaxes & operators @ https://www.yoctoproject.org/docs/1.6/bitbake-user-manual/bitbake-user-manual.html 
+Yocto Reference manaul For Directory structure, bbclasses & Tasks @ https://www.yoctoproject.org/docs/1.8/ref-manual/ref-manual.html 
+Finally, Yocto Development Manual @ https://www.yoctoproject.org/docs/1.6.1/dev-manual/dev-manual.html 
+
+For New Features & Recipe Upgrades, we can able to check those form Release notes @ https://wiki.yoctoproject.org/wiki/Releases 
+UI -> bitbake -g -u depexp machine-image.
