@@ -1,0 +1,17 @@
+ARMv8-A ARM Architechture 
+The ARMv8-A architecture is the latest generation ARM architecture targeted at the Applications Profile. 
+The name ARMv8 is used to describe the overall architecture, which now includes both 32-bit execution and 64-bit execution. 
+It introduces the ability to perform execution with 64-bit wide registers, 
+while preserving backwards compatibility with existing ARMv7 software.
+
+ARM-M For Microcontroller 
+ARM-R For RealTime 
+ARM-A For Application Profiles 
+
+
+Using Quad CORTEX - A55(Kyro Silver) & Quad CORTEX-A75 (Kyro Gold)
+Kyro - ARMv8
+Krait - ARMV7 & THUMB 2 
+Scorpion - ARM & THUMB 2 
+
+
