@@ -1,0 +1,24 @@
+https://en.wikipedia.org/wiki/Das_U-Boot
+
+Universal Boot Loader is an open source, 
+primary boot loader used in embedded devices to package the instructions to boot the device's operating system kernel.
+It is loaded by the system's ROM or BIOS from a supported boot device, such as an SD card, SATA drive, NOR flash
+
+U-Boot may be split into stages: the platform would load a small SPL (Secondary Program Loader), which is a stripped-down version of U-Boot,
+and the SPL would do initial hardware configuration and load the larger, fully featured version of U-Boot.
+Regardless of whether the SPL is used, U-Boot performs both first-stage (configuring memory controllers and SDRAM) and second-stage booting
+
+U-Boot runs a command-line interface on a serial port.
+Using the console, users can load and boot a kernel, possibly changing parameters from the default.
+There are also commands to read device information, read and write flash memory, download files (kernels, boot images, etc.) 
+from the serial port or network, manipulate device trees, and work with environment variables
+
+
+U-Boot requires its boot commands to explicitly specify the memory addresses as destinations for copying data 
+(kernel, ramdisk, device tree, etc.) and for jumping to the kernel and as arguments for the kernel
+Because U-Boot's commands are fairly low-level, it takes several steps to boot a kernel, 
+but this also makes U-Boot more flexible than other bootloaders, since the same commands can be used for more general tasks
+
+
+
+
