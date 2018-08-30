@@ -9,7 +9,7 @@ ARM-R For RealTime
 ARM-A For Application Profiles 
 
 
-Using Quad CORTEX - A55(Kyro Silver) & Quad CORTEX-A75 (Kyro Gold)
+Using Quad CORTEX - A53(Kyro Silver) & Quad CORTEX-A73 (Kyro Gold)
 Kyro - ARMv8
 Krait - ARMV7 & THUMB 2 
 Scorpion - ARM & THUMB 2 
