@@ -1,0 +1,14 @@
+
+Python is a high-level, interpreted, interactive and object-oriented scripting language
+1- Python is Interpreted − Python is processed at runtime by the interpreter. 
+    You do not need to compile your program before executing it
+2- Python is Interactive − You can actually sit at a Python prompt and interact with the interpreter directly 
+    to write your programs.
+3-Python is Object-Oriented − Python supports Object-Oriented style or technique of programming 
+    that encapsulates code within objects.
+
+Python is copyrighted. Like Perl, Python source code is now available under the GNU General Public License (GPL).
+
+PYTHONPATH : 
+This variable tells the Python interpreter where to locate the module files imported into a program.
+PYTHONSTARTUP:
