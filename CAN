@@ -1,20 +1,20 @@
-1990 - ISO11898 Standard
-	   ISO 11898-1 for low and medium speed CAN
-	   ISO 11898-2 for high speed CAN bus mostly using in automative 
-	   0 - Dominant is a logical 0 (actively driven to a voltage by the transmitter
-	   1 - Recessive is a logical 1 (passively returned to a voltage by a resistor) 
+Ref: https://en.wikipedia.org/wiki/CAN_bus 
 
-The wires are called CAN high and CAN low. When the CAN bus is in idle mode, both lines carry 2.5V. 
-When data bits are being transmitted, the CAN high line goes to 3.75V and the CAN low drops to 1.25V, thereby generating a 2.5V differential between the lines.
-	   
-	   
 CAN - 
 Asynchronous Data Txssion ..  Serial commun protocal 
 Messgage Based protocol - prioritization of messages done by identifier(in Hexa decimal format) -- high priority messages are transmitted first. 
 
 Robust Protocal  - Since any node can send data to any other node. High priority identifier will wins the arbitration and sends information first.
 
+ISO11898 Standards
+	   ISO 11898-1 for low and medium speed CAN
+	   ISO 11898-2 for high speed CAN bus mostly using in automative 
+	   0 - Dominant is a logical 0 (actively driven to a voltage by the transmitter)
+	   1 - Recessive is a logical 1 (passively returned to a voltage by a resistor) 
 
+The wires are called CAN high and CAN low. When the CAN bus is in idle mode, both lines carry 2.5V. 
+When data bits are being transmitted, the CAN high line goes to 3.75V and the CAN low drops to 1.25V, thereby generating a 2.5V differential between the lines.
+	  
 A CAN network can be configured to work with two different message (or "frame") formats:
 Standard frame format - support 11 Bit identifier  -  startofFrame(1) identifier(11)  Identifier extension bit (IDE)-0  Reserved bit(r0) DLC(Data Length code)(4) CRC(15) ACK  EOF(7)
 Extended frame format - support 29 Bit identifier  -  startofFrame(1) identifier(11)  Identifier extension bit (IDE)-1  Reserved bit(r1,r0) DLC(4)CRC(15) ACK  EOF(7)
