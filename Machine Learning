@@ -1,6 +1,11 @@
 https://www.analyticsindiamag.com/machine-learning-framework-10-need-know/  - 10 Popular Machine Learning Frameworks
 
-
+Google --> 
 TensorFlow: TensorFlow was developed by the Google Brain team for internal Google use. @ https://www.tensorflow.org/tutorials/ 
 It was released under the Apache 2.0 open source license on November 9, 2015. TensorFlow is an open-source machine learning library for 
 research and production. TensorFlow offers APIs for beginners and experts to develop for desktop, mobile, web, and cloud 
+
+Apache --> AWS--> 
+MXnet : MXNet is a modern open-source deep learning framework used to train, and deploy deep neural networks.
+The MXNet library is portable and can scale to multiple GPUs and multiple machines. 
+MXNet is supported by major Public Cloud providers including AWS @ https://mxnet.incubator.apache.org/tutorials/c%2B%2B/basics.html
