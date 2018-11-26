@@ -9,3 +9,7 @@ Apache --> AWS-->
 MXnet : MXNet is a modern open-source deep learning framework used to train, and deploy deep neural networks.
 The MXNet library is portable and can scale to multiple GPUs and multiple machines. 
 MXNet is supported by major Public Cloud providers including AWS @ https://mxnet.incubator.apache.org/tutorials/c%2B%2B/basics.html
+
+Caffe -> Yahoo CaffeOnSpark -> Caffe2 announced by Facebook with addition of Recurrent Neural Networks. -> Meregd into PyTorch
+Caffe2:
+You can bring your creations to scale using the power of GPUs in the cloud or to masses on mobile with Caffe2’s cross-platform libraries.
