@@ -1,23 +1,20 @@
-Ref: https://en.wikipedia.org/wiki/CAN_bus 
+Ref : https://www.engineersgarage.com/article/what-is-controller-area-network
+Realizing the problem of communication between different electronic modules Robert Bosch came up with this new protocol called CAN which was first released in 1986
+1990 - ISO11898 Standard
+	   ISO 11898-1 for low and medium speed CAN
+	   ISO 11898-2 for high speed CAN bus mostly using in automative 
+	   0 - Dominant is a logical 0 (actively driven to a voltage by the transmitter
+	   1 - Recessive is a logical 1 (passively returned to a voltage by a resistor) 
 
+The wires are called CAN high and CAN low. When the CAN bus is in idle mode, both lines carry 2.5V. 
+When data bits are being transmitted, the CAN high line goes to 3.75V and the CAN low drops to 1.25V, thereby generating a 2.5V differential between the lines.
+	   
+	   
 CAN - 
 Asynchronous Data Txssion ..  Serial commun protocal 
 Messgage Based protocol - prioritization of messages done by identifier(in Hexa decimal format) -- high priority messages are transmitted first. 
 
 Robust Protocal  - Since any node can send data to any other node. High priority identifier will wins the arbitration and sends information first.
-
-ISO11898 Standards
-	   ISO 11898-1 for low and medium speed CAN
-	   ISO 11898-2 for high speed CAN bus mostly using in automative 
-	   0 - Dominant is a logical 0 (actively driven to a voltage by the transmitter)
-	   1 - Recessive is a logical 1 (passively returned to a voltage by a resistor) 
-
-The wires are called CAN high and CAN low. When the CAN bus is in idle mode, both lines carry 2.5V. 
-When data bits are being transmitted, the CAN high line goes to 3.75V and the CAN low drops to 1.25V, thereby generating a 2.5V differential between the lines.
-	  
-A CAN network can be configured to work with two different message (or "frame") formats:
-Standard frame format - support 11 Bit identifier  -  startofFrame(1) identifier(11)  Identifier extension bit (IDE)-0  Reserved bit(r0) DLC(Data Length code)(4) CRC(15) ACK  EOF(7)
-Extended frame format - support 29 Bit identifier  -  startofFrame(1) identifier(11)  Identifier extension bit (IDE)-1  Reserved bit(r1,r0) DLC(4)CRC(15) ACK  EOF(7)
 
 CAN has four frame types: 
 Data frame  : a frame containing node data for transmission
@@ -25,6 +22,54 @@ Remote frame: a frame requesting the transmission of a specific identifier
 Error frame : a frame transmitted by any node detecting an error
 Overload frame: a frame to inject a delay between data or remote frame
 
+1 - Date frame:
+A CAN network can be configured to work with two different message (or "frame") formats:
+Standard frame format - support 11 Bit identifier  -  startofFrame(1) identifier(11)  Identifier extension bit (IDE)-0  Reserved bit(r0) DLC(Data Length code)(4) CRC(15) ACK  EOF(7)
+Extended frame format - support 29 Bit identifier  -  startofFrame(1) identifier(11)  Identifier extension bit (IDE)-1  Reserved bit(r1,r0) DLC(4)CRC(15) ACK  EOF(7)
+
+
+2- Remote Frame: 
+Destination node to request the data from the source by sending a Remote Frame.
+There are two differences between a Data Frame and a Remote Frame. Firstly the RTR-bit is transmitted as a dominant bit in the Data Frame and secondly in the Remote Frame there is no Data Field. The DLC field indicates the data length of the requested message (not the transmitted one)
+RTR = 0 ; DOMINANT in data frame
+RTR = 1 ; RECESSIVE in remote frame
+In the event of a Data Frame and a Remote Frame with the same identifier being transmitted at the same time, 
+the Data Frame wins arbitration due to the dominant RTR bit following the identifier.
+
+3-Error frame:
+ERROR FLAGS (6–12 dominant/recessive bits) &  ERROR DELIMITER (8 recessive bits)
+Active Error Flag : six dominant bits – Transmitted by a node detecting an error on the network that is in error state "error active".
+Passive Error Flag: six recessive bits – Transmitted by a node detecting an active error frame on the network that is in error state "error passive".
+Transmit error counter (TEC)  &  Receive error counter (REC) -->
+When TEC or REC is greater than 127 and lesser than 255, a Passive Error frame will be transmitted on the bus.
+When TEC and REC is lesser than 128, an Active Error frame will be transmitted on the bus.
+When TEC is greater than 255, then the node enters into Bus Off state, where no frames will be transmitted.
+
+4-Overload frame:
+The overload frame contains the two bit fields Overload Flag and Overload Delimiter. There are two kinds of overload conditions that can lead to the transmission of an overload flag:
+i) The internal conditions of a receiver, which requires a delay of the next data frame or remote frame.
+ii) Detection of a dominant bit during intermission.
+
 Bus Terminator:
 CAN Designed to use with shielded twisted pair cabling with 120 ohm impedence. So that trasmitter sends Dominent Bit and Rcver sends Ressisive Bit. 
 if there is no Bus termination with 120ohm resistor, Due to Electro magnetic iterface .. Rcver sends Dominent bit.  
+
+BenEFITS:
+·Low cost:  As CAN serial bus uses two wires, it offers good price/performance ratio. Also, driven by high volume production of low cost protocol devices, they are relatively cheap.
+·Reliable: Because of excellent error detection and error handling mechanisms, it offers high reliability transmission. It is also highly immune to Electromagnetic Interference
+·Flexibility:  CAN Nodes can be easily connected / disconnected. Also, the number of nodes is not limited by the protocol
+·Good Speed: CAN supports data rate of 1 MBit/s @ 40m bus length.
+·Multi-master communication: Any node can access the bus
+·Fault Confinement: Faulty nodes do not disturb the communication.
+·Broadcast capability: Messages can be sent to one /many/all nodes.
+·Standardized: ISO has standardized CAN via ISO-DIS 11898 high speed applications) and ISO-DIS 11519-2 (low speed applications). CAN protocol is also standardized by industry organizations such as SAE-Society of Automotive Engineers.
+
+Data exchange to happen among the nodes they must have the necessary hardware and the software embedded inside them.
+CAN controller and CAN transceiver:
+CAN controller convert the messages of the nodes in accordance with the CAN protocols to be transmitted via CAN transceiver over the serial bus and vice versa
+
+When the node is ready to send data, it checks availability of the bus and writes a CAN frame onto the network
+The data is organized in a specific structure called frame and the information carried in every byte is defined in the CAN protocol. 
+Protocols are generally of two types: address based and message based. In an address based protocol the data packets contain the address of the destination device for which the message is intended. In a message based protocol every message is identified by a predefined unique ID rather than the destination addresses. All nodes on CAN receive the CAN frame and depending on ID on the node.
+
+CAN protocol uses lower two layers of OSI i.e. physical layer and data link layer.
