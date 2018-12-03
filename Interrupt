@@ -1,0 +1,11 @@
+Interrupt:
+
+Interrupt latency:
+interrupt latency is the number of clock cycles that is taken by the processor to respond to an interrupt request.
+These are procedures stored at specific memory addresses which are called when a certain type of interrupt occurs. 
+
+The Cortex-M processors family has the NVIC that manage the execution of the interrupt.
+What is NVIC in ARM Cortex?
+The Nested Vector Interrupt Controller (NVIC) in the Cortex-M processor family is an example of an interrupt controller 
+with extremely flexible interrupt priority management. It enables programmable priority levels, automatic nested interrupt support, 
+along with support for multiple interrupt masking.
