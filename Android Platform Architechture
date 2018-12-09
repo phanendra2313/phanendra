@@ -1,0 +1,50 @@
+Android Platform Architechture: https://developer.android.com/guide/platform/#linux-kernel
+---- Andoid Applications     -------
+---- Java API Framework      -------
+---- Libraries -- ART runtime-------
+---- HAL Layer               -------
+---- Linux Kernel            -------
+
+
+Linux Kernel:
+The foundation of the Android platform is the Linux kernel. For example, the 
+Android Runtime (ART) relies on the Linux kernel for underlying functionalities such as threading and low-level memory management.
+Using a Linux kernel allows Android to take advantage of key security features and 
+allows device manufacturers to develop hardware drivers for a well-known kernel.
+
+HAL Layer:
+provides standard interfaces that expose device hardware capabilities to the higher-level Java API framework. 
+The HAL consists of multiple library modules, each of which implements an interface for a specific type of hardware component, 
+such as the camera or bluetooth module. When a framework API makes a call to access device hardware, 
+the Android system loads the library module for that hardware component.
+
+Android Run time(ART):
+For devices running Android version 5.0 (API level 21) or higher, each app runs in its own process and with its own instance of 
+the Android Runtime (ART). ART is written to run multiple virtual machines on low-memory devices by executing DEX files, 
+a bytecode format designed specially for Android that's optimized for minimal memory footprint. 
+Build toolchains, such as Jack, compile Java sources into DEX bytecode, which can run on the Android platform. 
+
+Prior to Android version 5.0 (API level 21), Dalvik was the Android runtime. If your app runs well on ART, 
+then it should work on Dalvik as well, but the reverse may not be true.
+
+Android also includes a set of core runtime libraries that provide most of the functionality of the Java programming language, 
+including some Java 8 language features, that the Java API framework uses. 
+
+Libraries:
+Many core Android system components and services, such as ART and HAL, 
+are built from native code that require native libraries written in C and C++. 
+The Android platform provides Java framework APIs to expose the functionality of some of these native libraries to apps.
+
+If you are developing an app that requires C or C++ code, 
+you can use the Android NDK to access some of these native platform libraries directly from your native code.
+
+JAVA API Framwework:
+These APIs form the building blocks you need to create Android apps by simplifying the reuse of core, 
+modular system components and services, which include the following:
+- View System 
+- content provider
+- Activtity manager 
+- Notification mgr
+- Resource mgr
+
+
