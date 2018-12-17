@@ -1,0 +1,20 @@
+https://www.thegeekdiary.com/beginners-guide-to-selinux/
+SELinux stands for “Security-Enhanced Linux“. Standard Linux security is based on Discretionary Access Control (DAC)
+
+SELinux was created by the US National Security Agency to provide a finer-grained level of control over files, processes, 
+users, and applications in the system. It is an enhancement to the Linux kernel, and it implements a different type of security called 
+Mandatory Access Control (MAC). MAC policy is centrally managed rather than being managed by the user.
+
+Enforcing: Access is denied to users and programs unless permitted by SELinux security policy rules.
+Permissive: The security policy rules are not enforced, but SELinux sends denial messages to a log file.
+Disabled: SELinux does not enforce a security policy because no policy is loaded in the kernel. Only DAC rules are used for access control.
+
+#sestatus 
+#getenforce 
+#setenforce
+
+SELinux also provides “Booleans“, which allow parts of a SELinux policy to be changed at run time, 
+without reloading or recompiling a SELinux policy. You can display a list of Booleans as 
+# semanage boolean -l
+# setsebool ftpd_use_nfs on
+# getsebool ftpd_use_nfs
