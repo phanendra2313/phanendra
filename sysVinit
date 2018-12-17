@@ -1,0 +1,60 @@
+sysV init runlevel system provides a standard process for controlling which programs init launches or halts when initializing a runlevel.
+/etc/rc.d/  init.d/ rc0.d/ rc1.d/ rc2.d/ rc3.d/ rc4.d/ rc5.d/ rc6.d/ 
+
+Runlevels:
+0 — Halt
+1 — Single-user text mode
+2 — Not used (user-definable)
+3 — Full multi-user text mode
+4 — Not used (user-definable)
+5 — Full multi-user graphical mode (with an X-based login screen)
+6 — Reboot
+
+/etc/inittab have default runlevel defined as  id:runlevels:action:process ->   id:5:initdefault:
+
+Ex: 
+/etc/conf.d/crond 
+#!/bin/bash
+
+. /etc/rc.conf
+. /etc/rc.d/functions
+
+DAEMON=crond
+ARGS=
+
+[ -r /etc/conf.d/$DAEMON ] && . /etc/conf.d/$DAEMON
+
+PID=$(get_pid $DAEMON)
+
+case "$1" in
+ start)
+   stat_busy "Starting $DAEMON"
+   [ -z "$PID" ] && $DAEMON $ARGS &>/dev/null
+   if [ $? = 0 ]; then
+     add_daemon $DAEMON
+     stat_done
+   else
+     stat_fail
+     exit 1
+   fi
+   ;;
+ stop)
+   stat_busy "Stopping $DAEMON"
+   [ -n "$PID" ] && kill $PID &>/dev/null
+   if [ $? = 0 ]; then
+     rm_daemon $DAEMON
+     stat_done
+   else
+     stat_fail
+     exit 1
+   fi
+   ;;
+ restart)
+   $0 stop
+   sleep 1
+   $0 start
+   ;;
+ *)
+   echo "usage: $0 {start|stop|restart}"  
+esac
+
