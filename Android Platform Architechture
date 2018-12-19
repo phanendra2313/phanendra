@@ -13,8 +13,10 @@ Using a Linux kernel allows Android to take advantage of key security features a
 allows device manufacturers to develop hardware drivers for a well-known kernel.
 
 HAL Layer:
-provides standard interfaces that expose device hardware capabilities to the higher-level Java API framework. 
-The HAL consists of multiple library modules, each of which implements an interface for a specific type of hardware component, 
+-The Android Hardware Abstraction Layer (HAL) is an interface for hardware vendors to implement that allows the 
+Android application/framework to communicate with hardware-specific device drivers.
+- provides standard interfaces that expose device hardware capabilities to the higher-level Java API framework. 
+- The HAL consists of multiple library modules, each of which implements an interface for a specific type of hardware component, 
 such as the camera or bluetooth module. When a framework API makes a call to access device hardware, 
 the Android system loads the library module for that hardware component.
 
