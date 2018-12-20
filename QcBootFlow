@@ -1,0 +1,80 @@
+https://forum.xda-developers.com/showthread.php?t=1769411&page=25
+
+PBL,RPM from Boot ROM at 0x0
+SBL1 (RPM SBL)  - download , authenticate & jump to SBL2
+SBL2 (Krait PBL) - download, authenticate , krait out of reset & jump to SBL2 in IMEM and download TZ ,authenticate,execute TZ
+                   jump back to SBL2, authenticate RPM, config DDR. Download & authenticate SBL3 ()
+SBL3    : Load APPSPBL , authenticate & jump to APPSPBL
+APPSPBL : Loads & jump to HLOS kernel. which loads Modem --> Enter TZ(PIL service) , authenticate Modem & exit TZ. 
+          take Modem out of reset.  also takes LPASS & WLAN out of reset for audio and WLAN.
+
+
+
+RPM processor starts executing PBL in boot ROM. Detects Flash device and downloads SBL1 to IMEM. SBL1 Authenticate&Loads SBL2
+SBL1 takes krait out of reset and wait for signal from SBL2. 
+SBL1 executes RPM firmware , downloaded by SBL2. if RPM formware authentication/donload fails, 
+SBL2 reset MSM and enter into Boot ROM Emergency download mode.
+
+
+
+PBL
+
+• RPM processor starts executing PBL in boot ROM
+• PBL determines cold boot or warm boot
+• PBL increases RPM clock speed from XO to 60 MHz
+• RPM processor start address is 0x0
+• For cold boot, next step is to detect Flash device that chip will boot from, 
+  based on the boot options
+• When detected, PBL downloads SBL1 (RPMSBL) from Flash to System IMEM
+• SBL1 authenticates SBL2 (Krait PBL)
+• RPM uses Crypto Engine 4.0 to authenticate images
+• SBL1 jumps to start of SBL2 (Krait PBL)
+
+SBL1
+
+• SBL1 configures MIMEM and GMEM, then loads and authenticates the SBL2 there;
+  MIMEM is 192 KB, so when SBL2 grows, it will spill to GMEM
+• SBL1 takes Krait out of reset
+• SBL1 waits for signal from Krait SBL
+• When desired signal is received, SBL1 executes RPM firmware, 
+  which is downloaded by SBL2
+• If RPM firmware image authentication/download fails, Krait SBL2 resets MSM and 
+  enters into Boot ROM Emergency Download mode
+  
+  SBL2
+
+• After being taken out of reset, Krait jumps to start of SBL2
+ - Krait boot address is software-configurable via register APCS_START_ADDR
+• SBL2 increases Krait clock speed
+• SBL2 downloads TZ image to TZ-dedicated system IMEM
+  - TZ image occupies at least 188 KB in system IMEM
+  - TZ image sets up security environment (configures xPU, etc.)
+• SBL2 authenticates TZ image
+  - SBL2 uses CE-4.0 to perform authentication
+• SBL2 downloads RPM firmware to Code RAM and authenticates it
+• SBL2 configures DDR
+• SBL2 sends RPM firmware-ready signal to RPM and lets RPM continue to 
+  execute RPM firmware
+• SBL2 jumps to SBL3
+
+SBL3
+
+• SBL3 bumps the system clock
+• SBL3 loads and authenticates APPSBL
+• SBL3 waits for the RPM process ready interrupt
+• Once the interrupt is coming, SBL3 jumps to APPSBL 
+
+SBL3/APPSBL/HLOS
+
+• SBL3 (Krait SBL) loads and authenticates APPSBL and apps kernel
+• Krait executes APPSBL and HLOS
+• Krait loads and authenticates modem Hexagon firmware and 
+  Hexagon software images, then takes them out of reset as needed
+• Krait loads and authenticates LPA Hexagon image, then takes it out 
+  of reset as needed
+• Krait loads and authenticates DSPS ARM7 images, then takes them 
+  out of reset as needed
+• Krait loads and authenticates RIVA ARM9 images, then takes them 
+  out of reset as needed
+• Order of loading modem Hexagon, LPA Hexagon, and DSPS ARM7 
+  can be decided by HLOS
