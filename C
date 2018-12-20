@@ -12,3 +12,18 @@ Ex: void (*fp)(int) = &fun; //assigning FP
  Call dynamically as below : 
  int ch;
  (*fun_ptr_arr)[ch](5,3) // Enter ch at run time to call required function in an array dynamically.
+ 
+ Volatile:
+ https://barrgroup.com/Embedded-Systems/How-To/C-Volatile-Keyword
+ Objects declared as volatile are omitted from optimization because values can be changed by code outside the scope of current code any time
+ 
+volatile int* volatile ptr;
+
+pointer to Volatile:
+volatile int myVolatileInt;
+volatile int* ptr = &myVolatileInt;
+
+Volatile pointer:
+int* volatile ptr; 
+
+
