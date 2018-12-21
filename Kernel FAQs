@@ -1,0 +1,41 @@
+1 How are the command line arguments passed to Linux kernel by the u-boot (bootloader)?
+
+
+2 Explain about command line arguments that are passed to linux kernel and how/where they are parsed in kernel code?
+
+The kernel parses parameters from the kernel command line and passed as cmd line arguments to init.
+
+Module parameters can be specified in two ways: via the kernel command line with a module name prefix, or via modprobe.
+(kernel command line) usbcore.blinkenlights=1
+(modprobe command line) modprobe usbcore blinkenlights=1
+
+Parameters for modules which are built into the kernel need to be specified on the kernel command line.
+modprobe looks through the kernel command line (/proc/cmdline) and collects module parameters when it loads a module, 
+so the kernel command line can be used for loadable modules too.
+arameters may be changed at runtime by the command echo -n ${value} > /sys/module/${modulename}/parameters/${parm}.
+
+parsing of arguments: init/main.c  parse_args() -> kernel/params.c -> parse_one()
+
+3 Explain about device tree:
+data structure describing the hardware components, so that the operating system's kernel can use and manage those.
+located in arch/arm/boot/dts/ . also contains include files in the form of .dtsi
+
+Datastruture  is a tree of named nodes and properties. Nodes contain properties and child nodes, while properties are name–value pairs.
+
+The purpose is to move a significant part of the hardware description out of the kernel binary, 
+and into the compiled device tree blob, which is handed to the kernel by the boot loader, 
+replacing a range of board-specific C source files and compile-time options in the kernel.
+
+The Device Tree Compiler (DTC) is the tool(scripts/dtc) that is used to compile the source into a binary form. 
+The output of the device tree compiler is a device tree blob (DTB), 
+which is a binary form that gets loaded by the boot loader and parsed by the Linux kernel at boot.
+
+parse dtb  by kernel:  uEnv.txt Boot script  file having boot configurations, by which u-boot pass cmdline args and dtb.
+setenv bootargs 'console=tty0 console=ttyO2,115200n8 root=/dev/mmcblk0p2 rootwait rootfstype=ext4 rw'
+fatload mmc 0:1 0x80300000 zImage
+fatload mmc 0:1 0x815f0000 beagle-xm.dtb
+bootz 0x80300000 - 0x815f0000
+
+4. Synchronization mechanism in linux kernel
+mutex vs spinlock: https://stackoverflow.com/questions/5869825/when-should-one-use-a-spinlock-instead-of-mutex 
+
