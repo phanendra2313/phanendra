@@ -1,0 +1,38 @@
+#include<limits.h>
+/* Hidden stub code will pass a root argument to the function below. Complete the function to solve the challenge. Hint: you may want to write one or more helper functions.  
+
+The Node struct is defined as follows:
+	struct Node {
+		int data;
+		Node* left;
+		Node* right;
+	}
+*/
+bool check(Node * node, const size_t& min, const size_t& max)
+{
+    if(node)
+    {
+        if(!((node->data > min) && (node->data < max)))
+        {
+            return false;
+        }
+        else
+        {
+            return (check(node->left, min, node->data) && check(node->right, node->data, max));
+        }
+    }
+
+    return true;
+}
+
+bool checkBST(Node* root) 
+{
+    if(root)
+    {
+        return (check(root->left, 0, root->data) && check(root->right, root->data, -1));
+    }
+    else
+    {
+        return true;
+    }
+}
