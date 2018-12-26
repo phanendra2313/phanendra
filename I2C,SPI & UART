@@ -3,7 +3,7 @@ I2C: http://www.circuitbasics.com/basics-of-the-i2c-communication-protocol/
 SPI: http://www.circuitbasics.com/basics-of-the-spi-communication-protocol/
 UART: http://www.circuitbasics.com/basics-uart-communication/
 
-
+https://www.i2c-bus.org/
 I2C in kernel:
 i2c-dev.c -> i2c_dev reperesents adapter is an I2C or SMbus master, not a slave (i2c_client) with which messages will be exchanged.  
 It's coupled with a character special file which is accessed by user mode drivers.
