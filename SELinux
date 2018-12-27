@@ -1,4 +1,7 @@
 https://www.thegeekdiary.com/beginners-guide-to-selinux/
+
+https://en.wikipedia.org/wiki/Security-Enhanced_Linux
+
 SELinux stands for “Security-Enhanced Linux“. Standard Linux security is based on Discretionary Access Control (DAC)
 
 SELinux was created by the US National Security Agency to provide a finer-grained level of control over files, processes, 
