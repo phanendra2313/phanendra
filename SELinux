@@ -18,3 +18,16 @@ without reloading or recompiling a SELinux policy. You can display a list of Boo
 # semanage boolean -l
 # setsebool ftpd_use_nfs on
 # getsebool ftpd_use_nfs
+
+Users, policies and security contexts
+SELinux users and roles do not have to be related to the actual system users and roles. For every current user or process, 
+SELinux assigns a three string context consisting of a username, role, and domain (or type). This system is more flexible 
+than normally required: as a rule, most of the real users share the same SELinux username, and all access control is managed 
+through the third tag, the domain. The circumstances under which a process is allowed into a certain domain must be configured 
+in the policies. The command runcon allows for the launching of a process into an explicitly specified context 
+(user, role, and domain), but SELinux may deny the transition if it is not approved by the policy.
+
+SELinux adds the -Z switch to the shell commands ls, ps, and some others, allowing the security context of the files or process to be seen.
+
+Typical policy rules consist of explicit permissions, for example, which domains the user must possess 
+to perform certain actions with the given target (read, execute, or, in case of network port, bind or connect), and so on
