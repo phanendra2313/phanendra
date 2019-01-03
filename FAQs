@@ -1,0 +1,12 @@
+1) Virtual memory 
+when page table created. how mapping happened b/w virtual to physical. 
+difference between virtual and pysical memory. 
+2)Volatile 
+3)Function pointer
+4)BST
+
+interrupts - how interrupts will be handled. what are the types of ARM modes. concepts of ARM.
+which one is best locking mechanism in interrupt context. 
+scheduling and context switching.  
+
+structures and unions . major use of unions. 
