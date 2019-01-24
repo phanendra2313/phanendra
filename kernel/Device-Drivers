@@ -1,2 +1,7 @@
 https://doc.lagout.org/operating%20system%20/linux/Linux%20Kernel%20Development%2C%203rd%20Edition.pdf Book by robert love
 https://www.safaribooksonline.com/library/view/linux-device-drivers/0596005903/ch01.html Book by greg kroah hartman
+
+https://www.oreilly.com/library/view/essential-linux-device/9780132396554/ - Essential Linux Device Drivers
+
+The software that handles or manages a hardware controller is known as a device driver.an operating system loads the 
+device drivers and calls the specific functions in the driver software in order to execute specific tasks on the device
