@@ -1,0 +1,109 @@
+http://linuxburps.blogspot.com/2013/09/linux-kernel-interrupts-and-handlers.html 
+
+
+interrupt handlers are different from other kernel functions. Kernel invokes them in response to interrupts and 
+they run in a special context called interrupt context. This special context is also called atomic context 
+because code executing in this context is unable to block. Process context is the mode of operation 
+the kernel is in while it is executing on behalf of a process—for example, executing a system call or running a kernel thread.
+
+ For a device to interrupt, its device driver must register an interrupt handler. 
+ Drivers can register an interrupt handler and enable a given interrupt line for handling with the function request_irq(), 
+ which is declared in <linux/interrupt.h>:
+
+int request_irq(unsigned int irq, irq_handler_t handler,unsigned long flags, const char name,
+                          void *dev)
+Flags can be zero or bit mask of one or more of the flags. 
+ IRQF_SHARED: This flag specifies that the interrupt line can be shared among multiple interrupt handlers. 
+ Each handler registered on a given line must specify this flag; otherwise, only one handler can exist per line.
+
+ In order to register a handler as shared, following must be satisfied:
+
+    The IRQF_SHARED flag must be set in the flags argument to request_irq(). However, usage of IRQF_DISABLED can be mixed.
+    The dev argument must be unique to each registered handler. A pointer to any per-device structure is sufficient;
+    a common choice is the device structure as it is both unique and potentially useful to the handler. 
+    You cannot pass NULL for a shared handler.
+    The interrupt handler must be capable of distinguishing whether its device actually generated an interrupt
+    
+ When your driver unloads, you need to unregister your interrupt handler and potentially disable the interrupt line. 
+ 
+void free_irq(unsigned int irq, void *dev)
+
+A new friend of “request_irq()” was introduced: “request_threaded_irq()”. It is important function to understand before we go further deep in world of bottom halves
+ int request_threaded_irq(unsigned int irq, irq_handler_t handler,irq_handler_t
+                                            thread_fn, unsigned long flags, const char *name, void  dev)
+
+handler - called when interrupt occurs
+thread_fn – Function called from irq handler thread. If NULL, no irq thread is created
+
+Handler is called in interrupt context and it’s job is usually to quite the device and return; it cannot sleep. If it’s return value is IRQ_WAKE_THREAD, 
+the thread_fn() will be called in process context; it can sleep.
+
+1- Top Half:
+    The interrupt handler is the top half. The top half is run immediately upon receipt of the interrupt and 
+    performs only the work that is time-critical, such as acknowledging receipt of the interrupt or resetting the hardware.
+2- Bottom Half: 
+    Work that can be performed later is deferred until the bottom half. The bottom half runs in the future, 
+    at a more convenient time, with all interrupts enabled.
+    
+Interrupt handlers in Linux need not be reentrant
+Interrupt context is time-critical because the interrupt handler interrupts other code. Code should be quick and simple.
+Interrupt handlers do not run in process context; therefore, they cannot block.
+
+    A handler can't transfer data to or from user space, because it doesn't execute in the context of a process.
+    Handlers also cannot do anything that would sleep, such as calling wait_event, allocating memory with anything 
+    other than GFP_ATOMIC, or locking a semaphore.
+    Handlers cannot call schedule.
+
+ Bottom half is a generic operating system term referring to the deferred portion of interrupt processing, so named because it represents the second, or bottom, half of the interrupt processing solution.
+
+There is no clear guideline on how to divide the work between the top and bottom half, following useful tips can help:
+
+    If the work is time sensitive, perform it in the interrupt handler.
+    If the work is related to the hardware, perform it in the interrupt handler.
+    If the work needs to ensure that another interrupt (particularly the same interrupt) does not interrupt it, perform it in the interrupt handler.
+    For everything else, consider performing the work in the bottom half.
+1- Softirqs:
+ Softirqs are statically allocated at compile time, hence, you cannot dynamically register and destroy softirqs.
+Softirqs are represented by softirq_action structure defined in <linux/interrupt.h>
+
+struct softirq_action {
+                void       (*action)(struct softirq_action *);
+};
+
+The prototype of a softirq handler, action, looks like
+
+void softirq_handler(struct softirq_action *)
+
+ Few things to remember about softirqs: 
+
+    A softirq never preempts another softirq. The only event that can preempt a softirq is an interrupt handler.
+    The softirq handlers run with interrupts enabled and cannot sleep.
+    While a handler runs, softirqs on the current processor are disabled Another softirq—even the same one—can run on another processor.
+
+A registered softirq must be marked before it will execute. This is called raising the softirq.
+In order to do so, call raise_softirq() or raise_softirq_irqoff() (if interrupts are already off).
+
+2-- Tasklets:
+
+Tasklets are implemented on top of softirqs, they are softirqs. They are represented by two softirqs: HI_SOFTIRQ and TASKLET_SOFTIRQ. The only difference in these types is that the HI_SOFTIRQ-based tasklets run prior to the TASKLET_SOFTIRQ based tasklets.
+
+Although they are implemented on top of softirqs, but following differentiates them:
+
+    Tasklets can be created statically and dynamically.
+    Two different tasklets can run concurrently on different processors, but two of the same type of tasklet cannot run simultaneously.
+Tasklets are scheduled (similar to raising the softirq) via the tasklet_schedule() and tasklet_hi_schedule() functions.
+
+3- Work Queues:
+
+They are quite different from softirqs, tasklets as:
+
+    work queues defer work into a kernel thread. They always runs in process context. Thus, code deferred to a work queue has all the usual benefits of process context.
+    work queues are schedulable and can therefore sleep.
+ To queue a given work’s handler function with the default events worker threads, simply call
+
+schedule_work(&work);
+schedule_delayed_work(&work, delay);
+
+
+
+
