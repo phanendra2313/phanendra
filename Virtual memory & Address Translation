@@ -1,1 +1,15 @@
 https://www.youtube.com/playlist?list=PLiwt1iVUib9s2Uo5BeYmwkDFUh70fJPxX
+
+Virtual memory, also known as the swap file, Memory management technique uses part of your hard drive to effectively expand 
+your RAM, allowing you to run more programs than it could otherwise handle. 
+But a hard drive is much slower than RAM, so it can really hurt performance.
+
+A page table is the data structure used by a virtual memory system in a computer operating system to store 
+the mapping between virtual addresses and physical addresses. Virtual addresses are used by the program executed 
+by the accessing process, while physical addresses are used by the hardware, or more specifically, by the RAM subsystem. 
+The page table is a key component of virtual address translation which is necessary to access data in memory.
+
+Role of the page table
+In operating systems that use virtual memory, every process is given the impression that it is working with large, 
+contiguous sections of memory. Physically, the memory of each process may be dispersed across different areas of 
+physical memory, or may have been moved (paged out) to another storage, typically to a hard disk drive.
