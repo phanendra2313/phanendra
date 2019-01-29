@@ -1,0 +1,9 @@
+https://opensourceforu.com/2014/10/an-introduction-to-device-drivers-in-the-linux-kernel/
+
+how does communication between the device file and the driver take place? 
+It happens via a pair of numbers referred to as major and minor numbers
+
+The major number identifies the driver associated with the device, i.e., which driver is to be used. 
+The minor number is used by the kernel to determine exactly which device is being referred to. 
+For instance, a hard disk may have three partitions. Each partition will have a separate minor number 
+but only one major number, because the same storage driver is used for all the partitions.
