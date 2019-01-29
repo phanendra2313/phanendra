@@ -1,6 +1,9 @@
 Function Pointers:
 Function pointers can be useful when you want to create callback mechanism, 
 and need to pass address of an function to another function. 
+They can also be useful when you want to store an array of functions, to call dynamically 
+
+If a reference of a function is passed to another function as an argument to call it,  it will be called as a Callback function.
 
 Unlike normal pointers, a function pointer points to code, not data. 
 Typically a function pointer stores the start of executable code.
