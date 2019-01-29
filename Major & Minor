@@ -7,3 +7,29 @@ The major number identifies the driver associated with the device, i.e., which d
 The minor number is used by the kernel to determine exactly which device is being referred to. 
 For instance, a hard disk may have three partitions. Each partition will have a separate minor number 
 but only one major number, because the same storage driver is used for all the partitions.
+
+automatic device creation using class_create and device_create:
+https://opensourceforu.com/2011/04/character-device-files-creation-operations/
+
+dev_t first;
+struct class *cl = class_create(THIS_MODULE, "<device class name>");
+device_create(cl, NULL, first, NULL, "<device name format>", ...);
+
+Registration with VFS layer: 
+  static struct file_operations fops =
+{
+  .owner = THIS_MODULE,
+  .open = my_open,
+  .release = my_close,
+  .read = my_read,
+  .write = my_write
+}
+
+register_chrdev(major no, device name, &fopsg);  static registration
+if major no == 0, it will assign major no dymnamically.
+
+alloc_chrdev_region(&first, 0, 1, "phani");  --- Dynamic registration 
+
+
+
+
