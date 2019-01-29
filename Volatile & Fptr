@@ -1,0 +1,44 @@
+Function Pointers:
+Function pointers can be useful when you want to create callback mechanism, 
+and need to pass address of an function to another function. 
+
+Unlike normal pointers, a function pointer points to code, not data. 
+Typically a function pointer stores the start of executable code.
+Ex: void (*fp)(int) = &fun; //assigning FP
+    fp(10); //or (*fp)(10); // Calling fun through FP
+    
+ we can have an array of function pointers to store an array of functions, so that we call dynamically. Ex as below 
+ void (*fun_ptr_arr[])(int, int) = {add, subtract, multiply};
+ Call dynamically as below : 
+ int ch;
+ (*fun_ptr_arr)[ch](5,3) // Enter ch at run time to call required function in an array dynamically.
+ 
+ Volatile:
+ https://barrgroup.com/Embedded-Systems/How-To/C-Volatile-Keyword
+ volatile is used when the value of variable is updated by external factor 
+ (e.g. interrupts in micro-controller) and compiler is not optimized the volatile variable.
+ 
+ Volatile tells the compiler to always load a variable from RAM rather than caching it in a CPU register. 
+ This assures that a variable that's altered by hardware or an interrupt service routine, gets loaded and stored properly.
+ 
+ Objects declared as volatile are omitted from optimization because values can be changed by 
+ code outside the scope of current code any time.
+ 
+ Use cases:
+ 1) peripherals contain registers whose values may change asynchronously to the program flow,
+ So Memory-mapped peripheral registers has to declared with volatile to inform compiler to not optimize.
+ 2)if compiler optimization turned off,compiler has no idea that what all can be changed within the ISR function,
+ so data modifying in ISR has to be declared with volatile.
+ 3)all shared global objects of muti threaded appplicatoin must also be declared volatile to prevent compiler optimization 
+ from introducing unexpected behaviors
+ 
+volatile int* volatile ptr;
+
+pointer to Volatile:
+volatile int myVolatileInt;
+volatile int* ptr = &myVolatileInt;
+
+Volatile pointer:
+int* volatile ptr; 
+
+
