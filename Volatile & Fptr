@@ -44,4 +44,15 @@ volatile int* ptr = &myVolatileInt;
 Volatile pointer:
 int* volatile ptr; 
 
+Const Volatile Usecase:
+https://stackoverflow.com/questions/4592762/difference-between-const-const-volatile 
+
+In an embedded system, this is typically used to access hardware registers that can be read and are updated by the hardware, but make no sense to write to (or might be an error to write to).
+
+An example might be the status register for a serial port. Various bits will indicate if a character is waiting to be read or if the transmit register is ready to accept a new character (ie., - it's empty). Each read of this status register could result in a different value depending on what else has occurred in the serial port hardware.
+
+It makes no sense to write to the status register (depending on the particular hardware spec), but you need to make sure that each read of the register results in an actual read of the hardware - using a cached value from a previous read won't tell you about changes in the hardware state.
+
+
+
 
