@@ -5,6 +5,8 @@ UART: http://www.circuitbasics.com/basics-uart-communication/
 
 https://i2c.info/i2c-bus-specification
 
+https://aticleworld.com/i2c-interview-questions/
+
 https://www.i2c-bus.org/
 I2C in kernel:
 i2c-dev.c -> i2c_dev reperesents adapter is an I2C or SMbus master, not a slave (i2c_client) with which messages will be exchanged.  
