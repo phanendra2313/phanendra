@@ -1,0 +1,71 @@
+https://docs.docker.com/get-started/
+
+Docker is a platform for developers and sysadmins to develop, deploy, and run applications with containers. The use of Linux containers to deploy applications is called containerization
+
+An image is an executable package that includes everything needed to run an application--the code, a runtime, libraries, environment variables, and configuration files.
+
+$docker images (or) docker image ls - To list Docker images 
+
+A container is a runtime instance of an image--what the image becomes in memory when executed (that is, an image with state, or a user process). You can see a list of your running containers with the command, docker ps
+
+$docker container ls  (or) docker ps -- see only Running containers
+$docker container ls --all (or) docker ps -a -- all container [-aq  quiet mode]
+
+$docker run <image-name>  - To run docker image
+Ex: 
+$docker run hello-world
+-Docker client contact Docker Daemon
+-Daemon pull hello-world image from Docker hub
+-Daemon create new container from that image to run the executable
+-Daemon streamed output to Docker client. same will be showed as output in terminal
+
+root@archteam-OptiPlex-3050:~# docker version
+Client:
+ Version:           18.09.6
+ API version:       1.39
+ Go version:        go1.10.8
+ Git commit:        481bc77
+ Built:             Sat May  4 02:35:57 2019
+ OS/Arch:           linux/amd64
+ Experimental:      false
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          18.09.6
+  API version:      1.39 (minimum version 1.12)
+  Go version:       go1.10.8
+  Git commit:       481bc77
+  Built:            Sat May  4 01:59:36 2019
+  OS/Arch:          linux/amd64
+  Experimental:     false
+
+installing Docker in ubuntu@
+Before you install Docker Engine - Community for the first time on a new host machine, you need to set up the Docker repository. Afterward, you can install and update Docker from the repository.
+
+setup Docker repository:
+sudo apt-get update
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+Add Docker's official GPG key:
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+verify key with finger print using last 8 characters of fingerprint:
+$ sudo apt-key fingerprint 0EBFCD88
+set up the stable repository:
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+Install Docker Engine:
+sudo apt-get update
+install latest version of Docker Engine:
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+Install specific version of Docker Engine:
+apt-cache madison docker-ce
+sudo apt-get install docker-ce=<VERSION_STRING> docker-ce-cli=<VERSION_STRING> containerd.io
+
+To uninstall:
+sudo apt-get remove docker docker-engine docker.io containerd runc
