@@ -1,0 +1,5 @@
+UEFI:
+Unified Extensible Firmware Interface (UEFI)- a software program that connects a computer's firmware to its operating system (OS). 
+UEFI is expected to eventually replace BIOS. UEFI provides faster boot time.
+UEFI offers security like "Secure Boot", which prevents the computer from booting from unauthorized/unsigned applications
+UEFI  is able to provide a GUI (navigation with mouse) as opposed to BIOS which allows navigation only using the keyboard.
